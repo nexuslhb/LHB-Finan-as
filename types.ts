@@ -59,11 +59,11 @@ export interface CreditCardConfig {
 export interface Bill {
   id: string;
   description: string;
-  amount: number; // Estimated/Fixed amount
+  amount: number; // Estimated/Fixed amount. For DEBT, this is the Total Original Amount.
   dueDay: number;
   category: string; // Maps to Expense Categories
   subCategory: string; // Maps to Expense Types
-  type: 'FIXED' | 'INSTALLMENT';
+  type: 'FIXED' | 'INSTALLMENT' | 'DEBT';
   startDate: string; // ISO String, when the bill/installment started
   endDate?: string; // ISO String, optional end date for the bill (used for deferred one-time bills)
   totalInstallments?: number;
@@ -72,6 +72,10 @@ export interface Bill {
   exclusions?: string[]; // Array of "Year-Month" strings (e.g. "2025-0") to skip specific occurrences
   lastPaidDate?: string; // Legacy support
   autoPay?: boolean;
+  // Debt specific fields
+  currentBalance?: number; // Remaining amount to pay
+  isSettled?: boolean;
+  settledDate?: string;
 }
 
 export interface Notification {
