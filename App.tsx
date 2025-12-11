@@ -96,12 +96,20 @@ const App: React.FC = () => {
   // Save Data Effect (Debounced or simple trigger)
   const isFirstRender = useRef(true);
 
+  // Helper function to remove undefined values (Firestore does not support undefined)
+  // This converts the object to JSON and back, stripping undefined keys
+  const sanitize = (data: any) => {
+      if (data === undefined) return null;
+      return JSON.parse(JSON.stringify(data));
+  };
+
   // Função dedicada para salvar os dados
   const saveData = async () => {
       if (!user) return;
       try {
         const docRef = doc(db, 'users', user.uid, 'data', 'finance_data');
-        await setDoc(docRef, {
+        // Sanitize data before saving
+        const dataToSave = sanitize({
           transactions,
           goals,
           budgets,
@@ -112,7 +120,9 @@ const App: React.FC = () => {
           transactionHierarchy: JSON.stringify(transactionHierarchy),
           investmentHierarchy: JSON.stringify(investmentHierarchy),
           paymentMethods
-        }, { merge: true });
+        });
+        
+        await setDoc(docRef, dataToSave, { merge: true });
       } catch (error) {
         console.error("Erro ao salvar dados no Firestore", error);
       }
@@ -321,15 +331,13 @@ const App: React.FC = () => {
                     <div className="bg-[#0C2BD8] p-2 rounded-lg shadow-sm flex items-center justify-center">
                        <Wallet className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-left hidden sm:block">
-                       <h1 className="text-xl font-bold text-[#1B203C] leading-none flex items-center gap-2">
+                    
+                    <div className="text-left">
+                       <h1 className="text-lg sm:text-xl font-bold text-[#1B203C] leading-none flex items-center gap-2">
                          LHB Finanças 
                          <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isMenuOpen ? 'rotate-180' : ''}`} />
                        </h1>
                        <p className="text-xs text-slate-500 font-medium mt-0.5">Olá {firstName}</p>
-                    </div>
-                    <div className="sm:hidden text-left">
-                       <h1 className="text-lg font-bold text-[#1B203C] leading-none">LHB</h1>
                     </div>
                 </button>
 

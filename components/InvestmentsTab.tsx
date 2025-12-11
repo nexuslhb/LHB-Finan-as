@@ -519,11 +519,11 @@ const InvestmentsTab: React.FC<InvestmentsTabProps> = ({
       {/* Advanced Search Modal */}
       {isSearchOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl p-[50px] w-full max-w-[90%] shadow-2xl animate-in zoom-in-95 duration-200 h-[85vh] flex flex-col">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 md:p-10 w-full max-w-[90%] shadow-2xl animate-in zoom-in-95 duration-200 h-[90vh] md:h-[85vh] flex flex-col">
             
             {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-               <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <div className="flex justify-between items-center mb-4 md:mb-6 shrink-0">
+               <h3 className="text-lg md:text-xl font-bold text-slate-800 flex items-center gap-2">
                  <Search className="w-5 h-5 text-[#0C2BD8]" />
                  Filtrar Aportes
                </h3>
@@ -533,23 +533,25 @@ const InvestmentsTab: React.FC<InvestmentsTabProps> = ({
             </div>
 
             {/* Filters Area */}
-            <div className="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4 mb-6">
+            <div className="bg-slate-50 p-4 md:p-5 rounded-xl border border-slate-200 space-y-4 mb-4 md:mb-6 shrink-0 overflow-y-auto max-h-[40vh] md:max-h-none custom-scrollbar">
                
                {/* Quick Period Buttons */}
-               <div className="flex gap-2">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider self-center mr-2">Período:</span>
-                  {[30, 60, 90, 365].map(days => (
-                    <button 
-                      key={days}
-                      onClick={() => setQuickPeriod(days)}
-                      className="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg hover:border-[#0C2BD8] hover:text-[#0C2BD8] transition-colors shadow-sm"
-                    >
-                      {days === 365 ? '1 Ano' : `Últimos ${days} dias`}
-                    </button>
-                  ))}
+               <div className="flex flex-col sm:flex-row gap-2 sm:items-center flex-wrap">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-2">Período:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {[30, 60, 90, 365].map(days => (
+                        <button 
+                        key={days}
+                        onClick={() => setQuickPeriod(days)}
+                        className="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg hover:border-[#0C2BD8] hover:text-[#0C2BD8] transition-colors shadow-sm whitespace-nowrap"
+                        >
+                        {days === 365 ? '1 Ano' : `Últimos ${days} dias`}
+                        </button>
+                    ))}
+                  </div>
                </div>
 
-               <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
                   <div>
                      <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Categoria</label>
                      <select 
@@ -614,15 +616,15 @@ const InvestmentsTab: React.FC<InvestmentsTabProps> = ({
 
             {/* Results Area (Scrollable) */}
             <div className="flex-1 overflow-y-auto custom-scrollbar bg-slate-50 border border-slate-200 rounded-xl relative">
-              <div id="printable-area" className="min-w-full">
+              <div id="printable-area" className="min-w-full overflow-x-auto">
                   <table className="w-full text-sm text-left">
                      <thead className="bg-slate-100 text-slate-500 font-semibold uppercase text-xs sticky top-0 z-10 shadow-sm">
                         <tr>
-                           <th className="px-4 py-3">Data</th>
-                           <th className="px-4 py-3">Descrição do Ativo</th>
-                           <th className="px-4 py-3">Categoria/Tipo</th>
-                           <th className="px-4 py-3">Banco/Corretora</th>
-                           <th className="px-4 py-3 text-right">Valor</th>
+                           <th className="px-4 py-3 whitespace-nowrap">Data</th>
+                           <th className="px-4 py-3 whitespace-nowrap">Ativo</th>
+                           <th className="px-4 py-3 whitespace-nowrap">Categoria/Tipo</th>
+                           <th className="px-4 py-3 whitespace-nowrap">Banco/Corretora</th>
+                           <th className="px-4 py-3 text-right whitespace-nowrap">Valor</th>
                         </tr>
                      </thead>
                      <tbody className="divide-y divide-slate-100 bg-white">
@@ -632,7 +634,7 @@ const InvestmentsTab: React.FC<InvestmentsTabProps> = ({
                                  <td className="px-4 py-3 text-slate-500 whitespace-nowrap">
                                     {new Date(t.date).toLocaleDateString('pt-BR')}
                                  </td>
-                                 <td className="px-4 py-3 font-medium text-slate-800">
+                                 <td className="px-4 py-3 font-medium text-slate-800 whitespace-nowrap">
                                     {t.description}
                                  </td>
                                  <td className="px-4 py-3 text-slate-600">
@@ -662,8 +664,8 @@ const InvestmentsTab: React.FC<InvestmentsTabProps> = ({
             </div>
             
             {/* Footer / Actions */}
-            <div className="mt-6 flex justify-between items-center">
-               <div className="text-sm text-slate-500">
+            <div className="mt-4 md:mt-6 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0">
+               <div className="text-sm text-slate-500 text-center sm:text-left">
                   Total filtrado: <span className="font-bold text-slate-800">{filteredInvestments.length}</span> | 
                   Volume: <span className="font-bold text-[#0C2BD8]">{formatCurrency(filteredInvestments.reduce((acc, curr) => acc + curr.amount, 0))}</span>
                </div>
@@ -671,7 +673,7 @@ const InvestmentsTab: React.FC<InvestmentsTabProps> = ({
                <button 
                   onClick={handlePrintInvestments}
                   disabled={filteredInvestments.length === 0}
-                  className="flex items-center gap-2 bg-[#1B203C] hover:bg-black text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 bg-[#1B203C] hover:bg-black text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-slate-300 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto justify-center"
                >
                   <Printer className="w-4 h-4" />
                   Salvar PDF / Imprimir

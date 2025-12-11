@@ -115,15 +115,15 @@ export const DEFAULT_TRANSACTION_HIERARCHY: Record<TransactionType, Record<strin
       "Pró-labore",
       "Salário",
       "Freelance",
-      "Doação"
+      "Comissão"
     ],
     "Juros": [
       "Aluguel Recebido",
       "Rendimentos de Investimentos"
     ],
     "Outras receitas": [
-      "Saldo Passado",
       "Venda de Bem Pessoal",
+      "Doação",
       "Outros (Entradas)"
     ]
   },

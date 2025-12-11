@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../services/firebase';
@@ -73,14 +74,14 @@ const AuthScreen: React.FC = () => {
     <div className="min-h-screen bg-[#EFF1F1] flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="bg-[#1B203C] p-8 text-center relative overflow-hidden">
-           <div className="absolute top-0 right-0 w-32 h-32 bg-[#0C2BD8] rounded-full blur-3xl opacity-50 -mr-10 -mt-10"></div>
+        <div className="bg-gradient-to-b from-[#0C2BD8] to-[#051367] p-8 text-center relative overflow-hidden">
+           <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl opacity-10 -mr-10 -mt-10"></div>
            <div className="relative z-10 flex flex-col items-center">
-              <div className="bg-white/10 p-3 rounded-xl mb-4 backdrop-blur-sm">
-                 <Wallet className="w-8 h-8 text-[#AFDE22]" />
+              <div className="bg-white p-3 rounded-xl mb-4 shadow-lg shadow-blue-900/20">
+                 <Wallet className="w-8 h-8 text-[#0C2BD8]" />
               </div>
-              <h1 className="text-2xl font-bold text-white mb-1">LHB Gestão</h1>
-              <p className="text-slate-400 text-sm">Controle financeiro inteligente</p>
+              <h1 className="text-2xl font-bold text-white mb-1">LHB Finanças</h1>
+              <p className="text-blue-200 text-sm">Controle Financeiro Pessoal</p>
            </div>
         </div>
 

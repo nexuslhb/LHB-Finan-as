@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { TransactionType } from '../types';
-import { Settings, Plus, Trash2, ChevronDown, ChevronRight, LayoutList, CreditCard, TrendingUp } from 'lucide-react';
+import { Settings, Plus, Trash2, ChevronDown, ChevronRight, LayoutList, CreditCard, TrendingUp, X } from 'lucide-react';
 
 interface SettingsViewProps {
   transactionHierarchy: Record<TransactionType, Record<string, string[]>>;
@@ -120,7 +121,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500 pb-20">
+    <div className="max-w-5xl mx-auto space-y-6 md:space-y-8 animate-in fade-in duration-500 pb-20">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -132,10 +133,10 @@ const SettingsView: React.FC<SettingsViewProps> = ({
           <p className="text-slate-500 mt-1">Gerencie categorias, tipos e opções do sistema.</p>
         </div>
 
-        <div className="flex bg-[#FBFBFB] p-1.5 rounded-xl border border-slate-200 w-full md:w-auto">
+        <div className="flex flex-col sm:flex-row bg-[#FBFBFB] p-1.5 rounded-xl border border-slate-200 w-full md:w-auto gap-1 sm:gap-0">
           <button
             onClick={() => setActiveTab('transactions')}
-            className={`flex-1 md:flex-none px-6 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+            className={`flex-1 md:flex-none px-4 md:px-6 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
               activeTab === 'transactions' ? 'bg-white text-[#0C2BD8] shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
@@ -144,7 +145,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('investments')}
-            className={`flex-1 md:flex-none px-6 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+            className={`flex-1 md:flex-none px-4 md:px-6 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
               activeTab === 'investments' ? 'bg-white text-[#0C2BD8] shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
@@ -153,7 +154,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('payments')}
-            className={`flex-1 md:flex-none px-6 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+            className={`flex-1 md:flex-none px-4 md:px-6 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
               activeTab === 'payments' ? 'bg-white text-[#0C2BD8] shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
@@ -164,21 +165,21 @@ const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Content */}
-      <div className="bg-[#FBFBFB] rounded-2xl border border-slate-200 shadow-sm min-h-[500px] p-6">
+      <div className="bg-[#FBFBFB] rounded-2xl border border-slate-200 shadow-sm min-h-[500px] p-4 md:p-6">
         
         {/* === TRANSACTIONS TAB === */}
         {activeTab === 'transactions' && (
           <div className="space-y-6">
-            <div className="flex gap-4 border-b border-slate-200 pb-4">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 border-b border-slate-200 pb-4">
               <button 
                 onClick={() => setActiveTxType(TransactionType.INCOME)}
-                className={`px-4 py-2 rounded-lg font-bold text-sm transition-colors ${activeTxType === TransactionType.INCOME ? 'bg-[#AFDE22] text-black shadow-sm' : 'text-slate-500 hover:bg-slate-100'}`}
+                className={`w-full sm:w-auto px-4 py-2 rounded-lg font-bold text-sm transition-colors ${activeTxType === TransactionType.INCOME ? 'bg-[#AFDE22] text-black shadow-sm' : 'text-slate-500 hover:bg-slate-100'}`}
               >
                 Entradas (Receitas)
               </button>
               <button 
                 onClick={() => setActiveTxType(TransactionType.EXPENSE)}
-                className={`px-4 py-2 rounded-lg font-bold text-sm transition-colors ${activeTxType === TransactionType.EXPENSE ? 'bg-red-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-100'}`}
+                className={`w-full sm:w-auto px-4 py-2 rounded-lg font-bold text-sm transition-colors ${activeTxType === TransactionType.EXPENSE ? 'bg-red-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-100'}`}
               >
                 Saídas (Despesas)
               </button>
@@ -191,10 +192,10 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                     className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => toggleCategory(cat)}
                   >
-                    <div className="flex items-center gap-3">
-                      {expandedCategories[cat] ? <ChevronDown className="w-4 h-4 text-slate-400" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
-                      <span className="font-bold text-slate-800">{cat}</span>
-                      <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">{subs.length} tipos</span>
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      {expandedCategories[cat] ? <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" /> : <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />}
+                      <span className="font-bold text-slate-800 truncate">{cat}</span>
+                      <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full shrink-0">{subs.length} tipos</span>
                     </div>
                     <button 
                       onClick={(e) => { e.stopPropagation(); handleDeleteTxCategory(cat); }}
@@ -211,23 +212,23 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                           <div key={sub} className="flex items-center gap-1 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm text-sm text-slate-700">
                             {sub}
                             <button onClick={() => handleDeleteTxSubCategory(cat, sub)} className="ml-1 text-slate-300 hover:text-red-500">
-                              <XIcon className="w-3 h-3" />
+                              <X className="w-3 h-3" />
                             </button>
                           </div>
                         ))}
                         {subs.length === 0 && <span className="text-xs text-slate-400 italic">Nenhum tipo cadastrado</span>}
                       </div>
-                      <div className="flex gap-2 max-w-md">
+                      <div className="flex flex-col sm:flex-row gap-2 max-w-md">
                         <input 
                           type="text" 
                           placeholder="Novo Tipo"
                           value={newSubCategoryName[cat] || ''}
                           onChange={(e) => setNewSubCategoryName(prev => ({ ...prev, [cat]: e.target.value }))}
-                          className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0C2BD8]"
+                          className="w-full sm:flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0C2BD8]"
                         />
                         <button 
                           onClick={() => handleAddTxSubCategory(cat)}
-                          className="bg-slate-800 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-black transition-colors"
+                          className="w-full sm:w-auto bg-slate-800 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-black transition-colors"
                         >
                           Adicionar
                         </button>
@@ -240,17 +241,17 @@ const SettingsView: React.FC<SettingsViewProps> = ({
 
             <div className="pt-4 border-t border-slate-200 mt-8">
               <label className="block text-sm font-bold text-slate-700 mb-2">Adicionar Nova Categoria de {activeTxType === TransactionType.INCOME ? 'Entrada' : 'Saída'}</label>
-              <div className="flex gap-2 max-w-md">
+              <div className="flex flex-col sm:flex-row gap-2 max-w-md">
                 <input 
                   type="text" 
                   value={newCategoryName}
                   onChange={(e) => setNewCategoryName(e.target.value)}
                   placeholder="Nome da Categoria"
-                  className="flex-1 bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 focus:outline-none focus:border-[#0C2BD8]"
+                  className="w-full sm:flex-1 bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 focus:outline-none focus:border-[#0C2BD8]"
                 />
                 <button 
                   onClick={handleAddTxCategory}
-                  className="bg-[#0C2BD8] text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 hover:bg-[#0C2BD8]/90 transition-colors"
+                  className="w-full sm:w-auto bg-[#0C2BD8] text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-[#0C2BD8]/90 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                   Criar
@@ -275,10 +276,10 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                     className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors"
                     onClick={() => toggleCategory(cat)}
                   >
-                    <div className="flex items-center gap-3">
-                      {expandedCategories[cat] ? <ChevronDown className="w-4 h-4 text-slate-400" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
-                      <span className="font-bold text-slate-800">{cat}</span>
-                      <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">{subs.length} tipos</span>
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      {expandedCategories[cat] ? <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" /> : <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />}
+                      <span className="font-bold text-slate-800 truncate">{cat}</span>
+                      <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full shrink-0">{subs.length} tipos</span>
                     </div>
                     <button 
                       onClick={(e) => { e.stopPropagation(); handleDeleteInvCategory(cat); }}
@@ -295,22 +296,22 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                           <div key={sub} className="flex items-center gap-1 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm text-sm text-slate-700">
                             {sub}
                             <button onClick={() => handleDeleteInvSubCategory(cat, sub)} className="ml-1 text-slate-300 hover:text-red-500">
-                              <XIcon className="w-3 h-3" />
+                              <X className="w-3 h-3" />
                             </button>
                           </div>
                         ))}
                       </div>
-                      <div className="flex gap-2 max-w-md">
+                      <div className="flex flex-col sm:flex-row gap-2 max-w-md">
                         <input 
                           type="text" 
                           placeholder="Novo Tipo de Ativo"
                           value={newSubCategoryName[cat] || ''}
                           onChange={(e) => setNewSubCategoryName(prev => ({ ...prev, [cat]: e.target.value }))}
-                          className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0C2BD8]"
+                          className="w-full sm:flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#0C2BD8]"
                         />
                         <button 
                           onClick={() => handleAddInvSubCategory(cat)}
-                          className="bg-slate-800 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-black transition-colors"
+                          className="w-full sm:w-auto bg-slate-800 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-black transition-colors"
                         >
                           Adicionar
                         </button>
@@ -323,17 +324,17 @@ const SettingsView: React.FC<SettingsViewProps> = ({
 
             <div className="pt-4 border-t border-slate-200 mt-8">
               <label className="block text-sm font-bold text-slate-700 mb-2">Adicionar Nova Categoria de Investimento</label>
-              <div className="flex gap-2 max-w-md">
+              <div className="flex flex-col sm:flex-row gap-2 max-w-md">
                 <input 
                   type="text" 
                   value={newCategoryName}
                   onChange={(e) => setNewCategoryName(e.target.value)}
                   placeholder="Nome da Categoria (ex: NFTs)"
-                  className="flex-1 bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 focus:outline-none focus:border-[#0C2BD8]"
+                  className="w-full sm:flex-1 bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 focus:outline-none focus:border-[#0C2BD8]"
                 />
                 <button 
                   onClick={handleAddInvCategory}
-                  className="bg-[#0C2BD8] text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 hover:bg-[#0C2BD8]/90 transition-colors"
+                  className="w-full sm:w-auto bg-[#0C2BD8] text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-[#0C2BD8]/90 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                   Criar
@@ -365,17 +366,17 @@ const SettingsView: React.FC<SettingsViewProps> = ({
 
             <div className="pt-4 border-t border-slate-200 mt-4">
               <label className="block text-sm font-bold text-slate-700 mb-2">Nova Forma de Pagamento</label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input 
                   type="text" 
                   value={newPaymentMethod}
                   onChange={(e) => setNewPaymentMethod(e.target.value)}
                   placeholder="ex: Vale Refeição"
-                  className="flex-1 bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 focus:outline-none focus:border-[#0C2BD8]"
+                  className="w-full sm:flex-1 bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 focus:outline-none focus:border-[#0C2BD8]"
                 />
                 <button 
                   onClick={handleAddPayment}
-                  className="bg-[#0C2BD8] text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 hover:bg-[#0C2BD8]/90 transition-colors"
+                  className="w-full sm:w-auto bg-[#0C2BD8] text-white px-6 py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-[#0C2BD8]/90 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                   Adicionar
@@ -389,10 +390,5 @@ const SettingsView: React.FC<SettingsViewProps> = ({
     </div>
   );
 };
-
-// Helper Icon
-const XIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-);
 
 export default SettingsView;
